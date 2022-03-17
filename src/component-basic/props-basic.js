@@ -20,4 +20,38 @@ function f({name,age}){
     console.log(name,age)
 }
 
-ReactDOM.render(<ConponentWithProps values = "Hello"/>, document.getElementById('root'));
+function Greeting(props){
+    return <h1>Hello, {props.name}</h1>
+}
+ function Sum(props){
+     const {x,y} = props
+     return <h1>{x + y}</h1>
+ }
+
+ // 함수 인자값을 전달받으면서 비구조화 할당 진행
+const PersonProfile = function({ name, age, gender, profile, highlight }) {
+    return (
+        <div className='person' style={highlight ? {color: 'red', backgroundColor : 'yellow'} : null}>
+            <h1>Profile</h1>
+            <img src={profile} />
+            <p>name : {name}</p>
+            <p>age : {age}</p>
+            <p>gender : {gender}</p>
+        </div>
+    )
+}
+
+const anotherPerson = {
+    name: 'Jane',
+    age: 28,
+    gender: 'female',
+    profile: 'https://randomuser.me/api/portraits/women/75.jpg'
+}
+
+ReactDOM.render(
+    <div>
+        <PersonProfile name='John' age={35} gender='male'
+        profile='https://randomuser.me/api/portraits/men/75.jpg' />
+        <PersonProfile {...anotherPerson} highlight/>
+    </div>,
+ document.getElementById('root'));
