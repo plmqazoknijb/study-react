@@ -4,4 +4,4 @@
 //import './component-basic/props-basic'
 //import './component-basic/props-children'
 //import './component-intermediate/state-study-1'
-import './component-intermediate/todo-app-demo'
+import './use-effect-demo/use-effect-intro'
