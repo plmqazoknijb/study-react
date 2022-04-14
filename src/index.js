@@ -4,4 +4,4 @@
 //import './component-basic/props-basic'
 //import './component-basic/props-children'
 //import './component-intermediate/state-study-1'
-import './use-effect-demo/use-effect-intro'
+import './use-effect-demo/github-fetch-repos'
