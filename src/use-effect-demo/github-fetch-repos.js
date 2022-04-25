@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from "react"
 import ReactDOM from "react-dom"
-
+function Search(props){
+    const [input,setInput] = useState("")
+    const handleChange = (e) => setInput(e.target.value)
+    return(
+        <div>
+            <input type='text' onChange={handleChange} value={input}/>
+            <button onClick={()=>{
+                props.onSearch(input)
+            }}>Search</button>
+        </div>
+    )
+}
 const RepoItem = (props) => {
     const { name, description, forks_count, stargazers_count, watchers_count, owner: { login } } = props.repo
     console.log(props.repo)
@@ -17,10 +28,10 @@ const RepoItem = (props) => {
 function RepoSearchApp() {
     const [repos, setRepos] = useState([])
     const [loading, setLoading] = useState(true)
-    const userName = "plmqazoknijb"
-
+    const [userName,setUserName]=useState(null)
     useEffect(() => {
-        fetch(`https://api.github.com/users/${userName}/repos`,
+        if(userName !== null){
+            fetch(`https://api.github.com/users/${userName}/repos`,
         {
             headers: {Authorization: "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"}
         })
@@ -30,10 +41,19 @@ function RepoSearchApp() {
                 setRepos(data)
                 setLoading(false)
             })
-    }, [])
+        }
+    }, [userName])
+
+    if(userName === null)return(
+        <div>
+            <Search onSearch = {setUserName}/>
+            <h1>유저 아이디를 입력해주세요.</h1>
+        </div>
+    )
 
     return (
         <div>
+            <Search onSearch = {setUserName}/>
             {
                 repos.length === 0
                     ? loading ? <h1>저장소를 불러오는 중입니다.</h1> : <h1>표시할 저장소가 없습니다.</h1>
@@ -47,6 +67,7 @@ function RepoSearchApp() {
                             })
                         }
                     </ul>
+                
             }
         </div>
     )
